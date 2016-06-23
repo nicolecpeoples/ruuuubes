@@ -1,0 +1,54 @@
+<h1> Hi <%= @user.name %>!</h1>
+
+<div class="row">
+<h3>Here is your profile description </h3>
+<div class="description col-md-4">
+	<%= @user.description %>
+</div>
+</div>
+
+<div class="row">
+	<h3> Your Professional Network: </h3>
+	<div class="network col-md-4">
+		<% @connections.each do |connection| %>
+		<% if connection.connected %> 
+			<p> <%= link_to connection.connection.name, connection.connection %>  <%= link_to 'Delete Connection', connection_path(connection), method: :delete, data: { confirm: "You sure?" } %></p>
+		<%  end %>
+		<% end %>
+	</div>
+</div>
+
+<div class="row">
+	<h3> Invitations </h3>
+	<h5> The following people asked you to be in their network </h5>
+	<table class="table table-striped">
+	<thead>
+		<tr>
+			<td> Name </td>
+			<td> Action </td>
+		</tr>
+	</thead>
+
+	<tbody>
+	<% @connections.each do |connection| %>
+		<% if connection.connected == false %> 
+		
+		<tr>
+			<td> <%= connection.connection.name %> </td>
+			
+			<td> <form action="/accept" method="post" display="inline-block;"> 
+				<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+					<input type="hidden" name="connect[id]" value="<%= connection.id %>" >
+					<input type="submit" value="Accept Invite"> 
+				</form>
+				<%= link_to 'Ignore', connection_path(connection), method: :delete, data: { confirm: "You sure?" } %>
+				
+			 </td>
+			 
+		</tr>
+
+		<% end %>
+	<% end %>
+	</tbody>
+</table>
+</div>

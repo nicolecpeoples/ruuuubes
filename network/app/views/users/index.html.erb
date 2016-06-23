@@ -1,0 +1,27 @@
+<h2> Users you may want to connect with: </h2>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<td> Name </td>
+			<td> Action </td>
+		</tr>
+	</thead>
+
+	<tbody>
+	<% @users.each do |user| %>
+		<tr>
+			<td> <%= link_to user.name, user %> </td>
+			<% if user.find_connection current_user %> <td> Pending Connection</td>
+			<% else %>
+			<td> <form action="/connect" method="post"> 
+				<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+					<input type="hidden" name="connect[user_id]" value="<%= user.id %>" >
+					<input type="submit" value="Connect"> 
+				</form>
+			 </td>
+			 <% end %>
+		</tr>
+	<% end %>
+	</tbody>
+</table>

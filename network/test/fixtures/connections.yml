@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  connection_id: 
+  connected: false
+
+two:
+  user_id: 
+  connection_id: 
+  connected: false
